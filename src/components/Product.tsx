@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import AddToCartButton from "./AddToCartButton";
 
 const URL = "https://dummyjson.com/products";
-type Product = {
+export type Product = {
   id: number;
   title: string;
   price: number;
@@ -26,7 +27,12 @@ export default function Product() {
 
   return (
     <div>
-      {products?.map((product) => <div key={product.id}>{product.title}</div>)}
+      {products?.map((product) => (
+        <div key={product.id}>
+          {product.title}
+          <AddToCartButton product={product} />
+        </div>
+      ))}
     </div>
   );
 }
