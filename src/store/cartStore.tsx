@@ -35,12 +35,22 @@ export const useCartStore = create<CartStore & Action>()((set) => ({
     }),
   removeProduct: (product) =>
     set((state) => {
-      //if curr product quantity is 1, remove item
-      if (product.id)
-        //else reduce quantity by 1
-        const newProducts = state.products.filter(
-          (prod) => prod.id !== product.id,
-        );
-      return { products: newProducts };
+      const newProducts = state.products.filter(
+        (prod) => prod.id !== product.id,
+      );
+      if (product.quantity === 1) {
+        return { products: newProducts };
+      }
+      const productToEdit = state.products.find(
+        (prod) => prod.id === product.id,
+      );
+
+      if (productToEdit) {
+        const newProduct = {
+          ...productToEdit,
+          quantity: productToEdit.quantity - 1,
+        };
+        return { products: [...newProducts, newProduct] };
+      }
     }),
 }));
