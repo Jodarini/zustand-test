@@ -52,5 +52,7 @@ export const useCartStore = create<CartStore & Action>()((set) => ({
         };
         return { products: [...newProducts, newProduct] };
       }
+
+      return { products: state.products };
     }),
 }));
